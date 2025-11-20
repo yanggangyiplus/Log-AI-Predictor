@@ -1,0 +1,31 @@
+# 로그 수집 설정
+collector:
+  # 로그 파일 경로
+  # 다른 포트/사이트의 로그도 경로만 변경하면 분석 가능
+  # 예: "/var/log/nginx/site1_access.log" (포트 80)
+  # 예: "/var/log/nginx/site2_access.log" (포트 8080)
+  # 예: "/var/log/apache2/access.log" (Apache)
+  log_path: "data/raw_logs/nginx_access.log"
+  
+  # 수집 모드: "realtime" 또는 "batch"
+  mode: "realtime"
+  
+  # Batch 모드일 때 수집 주기 (초)
+  batch_interval: 3600
+  
+  # 로그 타입: "nginx" 또는 "apache"
+  log_type: "nginx"
+  
+  # Apache 로그 포맷 (log_type이 "apache"일 때 사용)
+  # "combined" 또는 "common"
+  apache_format: "combined"
+  
+  # 로그 포맷 (Nginx)
+  nginx_format: '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"'
+  
+  # 버퍼 크기
+  buffer_size: 1000
+  
+  # 실시간 모니터링 여부
+  enable_realtime: true
+

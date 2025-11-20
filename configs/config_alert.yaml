@@ -1,0 +1,37 @@
+# 알림 설정
+alert:
+  # 알림 활성화 여부
+  enabled: true
+  
+  # 알림 조건
+  conditions:
+    # 5xx 에러 비율 임계값 (%)
+    error_rate_threshold: 5.0
+    
+    # AutoEncoder 재구성 오류 임계값
+    reconstruction_error_threshold: 0.75
+    
+    # 패턴 유사도 임계값 (%)
+    pattern_similarity_threshold: 80.0
+    
+    # 응답 시간 임계값 (ms)
+    response_time_threshold: 1000
+    
+  # 알림 방식
+  channels:
+    # Streamlit 대시보드 팝업
+    streamlit_popup: true
+    
+    # 로그 색상 하이라이트
+    log_highlight: true
+    
+    # Slack 웹훅 (선택사항)
+    slack:
+      enabled: false
+      webhook_url: ""
+      
+    # 일반 웹훅 (선택사항)
+    webhook:
+      enabled: false
+      url: ""
+

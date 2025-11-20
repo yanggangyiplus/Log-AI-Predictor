@@ -1,0 +1,38 @@
+# 모델 설정
+model:
+  # 사용할 이상 탐지 모델: "autoencoder", "isolation_forest", "pytorch_autoencoder", "lstm_autoencoder"
+  # 기본값: isolation_forest (빠르고 안정적)
+  anomaly_detector: "isolation_forest"
+  
+  # AutoEncoder 설정
+  autoencoder:
+    input_dim: 50
+    encoding_dim: 16
+    hidden_layers: [32, 24]
+    activation: "relu"
+    optimizer: "adam"
+    learning_rate: 0.001
+    batch_size: 32
+    epochs: 50
+    validation_split: 0.2
+    
+  # Isolation Forest 설정
+  isolation_forest:
+    n_estimators: 100
+    contamination: 0.1
+    random_state: 42
+    
+  # LSTM AutoEncoder 설정
+  lstm_autoencoder:
+    sequence_length: 60
+    lstm_units: 50
+    dropout: 0.2
+    epochs: 30
+    batch_size: 64
+    
+  # 이상 탐지 임계값
+  anomaly_threshold: 0.75
+  
+  # 모델 저장 경로
+  model_path: "models/"
+
