@@ -12,7 +12,7 @@ cp data/raw_logs/sample_nginx.log data/raw_logs/nginx_access.log
 python scripts/train_isolation_forest.py --data data/raw_logs/sample_nginx.log --output models/isolation_forest
 
 # 대시보드 실행
-streamlit run app/dashboard.py
+streamlit run app/web/main.py
 ```
 
 ### 2. 실제 Nginx 로그 사용
@@ -52,7 +52,7 @@ python scripts/run_detector.py --model models/isolation_forest
 
 4. **대시보드 배포**
    ```bash
-   streamlit run app/dashboard.py --server.port 8501
+   streamlit run app/web/main.py --server.port 8501
    ```
 
 ### 워크플로우 2: 실시간 모니터링
@@ -64,7 +64,7 @@ python scripts/run_detector.py --model models/isolation_forest
 
 2. **대시보드 실행**
    ```bash
-   streamlit run app/dashboard.py
+   streamlit run app/web/main.py
    ```
 
 3. **모니터링**

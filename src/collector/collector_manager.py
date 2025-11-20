@@ -10,6 +10,7 @@ from datetime import datetime
 import logging
 
 from .tail_collector import TailCollector
+from .polling_collector import PollingCollector
 from .nginx_parser import NginxParser
 from .apache_parser import ApacheParser
 
@@ -57,15 +58,57 @@ class CollectorManager:
         """
         self.callbacks.append(callback)
     
-    def start_realtime_collection(self):
-        """실시간 수집 시작"""
+    def start_realtime_collection(self, use_polling: bool = True):
+        """
+        실시간 수집 시작
+        
+        Args:
+            use_polling: True면 polling 방식 (Streamlit 호환), False면 스레드 방식
+        """
         log_path = self.config.get('log_path', 'data/raw_logs/nginx_access.log')
         
-        def on_new_line(line: str):
-            """새 로그 라인 수집 시 호출"""
+        if use_polling:
+            # Polling 방식 (스레드 없음, Streamlit 호환)
+            self.collector = PollingCollector(log_path)
+            self.collector.start()
+            logger.info("실시간 로그 수집 시작 (Polling 방식)")
+        else:
+            # 스레드 방식 (기존 방식, 호환성 유지)
+            def on_new_line(line: str):
+                """새 로그 라인 수집 시 호출"""
+                parsed = self.parser.parse_line(line)
+                if parsed:
+                    self.collected_logs.append(parsed)
+                    # 콜백 호출
+                    for callback in self.callbacks:
+                        try:
+                            callback(parsed)
+                        except Exception as e:
+                            logger.error(f"콜백 실행 오류: {e}")
+            
+            self.collector = TailCollector(log_path, callback=on_new_line)
+            self.collector.start()
+            logger.info("실시간 로그 수집 시작 (스레드 방식)")
+    
+    def poll_new_logs(self) -> List[Dict]:
+        """
+        새로운 로그를 polling 방식으로 가져오기
+        (Streamlit에서 주기적으로 호출)
+        
+        Returns:
+            파싱된 로그 리스트
+        """
+        if not self.collector or not isinstance(self.collector, PollingCollector):
+            return []
+        
+        new_lines = self.collector.poll()
+        parsed_logs = []
+        
+        for line in new_lines:
             parsed = self.parser.parse_line(line)
             if parsed:
                 self.collected_logs.append(parsed)
+                parsed_logs.append(parsed)
                 # 콜백 호출
                 for callback in self.callbacks:
                     try:
@@ -73,9 +116,7 @@ class CollectorManager:
                     except Exception as e:
                         logger.error(f"콜백 실행 오류: {e}")
         
-        self.collector = TailCollector(log_path, callback=on_new_line)
-        self.collector.start()
-        logger.info("실시간 로그 수집 시작")
+        return parsed_logs
     
     def collect_batch(self) -> List[Dict]:
         """
