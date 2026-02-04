@@ -9,6 +9,18 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 
 # 의존성 설치
 pip install -r requirements.txt
+
+# 환경 변수 설정 (Email 알림 사용 시 필수)
+# 프로젝트 루트에 .env 파일 생성
+cat > .env << EOF
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASSWORD=your-app-password
+SMTP_FROM_EMAIL=your-email@gmail.com
+SMTP_TO_EMAILS=admin@example.com
+EOF
+# .env 파일을 편집하여 실제 값 입력
 ```
 
 ## 2. 모델 학습

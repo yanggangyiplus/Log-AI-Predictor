@@ -9,6 +9,18 @@ from typing import List, Dict, Optional
 from pathlib import Path
 import logging
 import pandas as pd
+import sys
+
+# 프로젝트 루트를 경로에 추가
+project_root = Path(__file__).parent.parent.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
+try:
+    from app.utils.env_config import get_database_path
+    USE_ENV_CONFIG = True
+except ImportError:
+    USE_ENV_CONFIG = False
 
 logger = logging.getLogger(__name__)
 
@@ -16,14 +28,20 @@ logger = logging.getLogger(__name__)
 class DatabaseManager:
     """데이터베이스 관리 클래스"""
     
-    def __init__(self, db_path: str = "data/database/logs.db"):
+    def __init__(self, db_path: Optional[str] = None):
         """
         초기화
         
         Args:
-            db_path: 데이터베이스 파일 경로
+            db_path: 데이터베이스 파일 경로 (None이면 환경 변수 또는 기본값 사용)
         """
-        self.db_path = db_path
+        if db_path is None:
+            if USE_ENV_CONFIG:
+                self.db_path = get_database_path()
+            else:
+                self.db_path = "data/database/logs.db"
+        else:
+            self.db_path = db_path
         self._ensure_db_directory()
         self._initialize_database()
     

@@ -26,20 +26,20 @@ alert:
     log_highlight: true
     
     # Email 알림 (선택사항)
+    # 주의: 민감한 정보(비밀번호 등)는 .env 파일에 저장하세요
     email:
       enabled: false
-      # SMTP 서버 설정
-      smtp_server: "smtp.gmail.com"  # Gmail: smtp.gmail.com, Outlook: smtp-mail.outlook.com
-      smtp_port: 587  # TLS: 587, SSL: 465
-      smtp_user: "your-email@gmail.com"  # SMTP 인증 이메일
-      smtp_password: "your-app-password"  # 앱 비밀번호 (Gmail의 경우)
-      from_email: "your-email@gmail.com"  # 발신자 이메일
-      to_emails:  # 수신자 이메일 리스트
-        - "admin@example.com"
-        - "team@example.com"
+      # SMTP 서버 설정 (환경 변수 우선 사용)
+      # 환경 변수: SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, SMTP_FROM_EMAIL, SMTP_TO_EMAILS
+      smtp_server: "smtp.gmail.com"  # 기본값 (환경 변수 없을 때 사용)
+      smtp_port: 587  # 기본값
+      smtp_user: ""  # .env 파일의 SMTP_USER 사용 권장
+      smtp_password: ""  # .env 파일의 SMTP_PASSWORD 사용 필수!
+      from_email: ""  # .env 파일의 SMTP_FROM_EMAIL 사용 권장
+      to_emails: []  # .env 파일의 SMTP_TO_EMAILS 사용 권장 (쉼표로 구분)
       
     # 일반 웹훅 (선택사항)
     webhook:
       enabled: false
-      url: ""
+      url: ""  # 환경 변수 WEBHOOK_URL 사용 권장
 

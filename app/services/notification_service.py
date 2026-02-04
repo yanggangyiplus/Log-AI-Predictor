@@ -19,6 +19,7 @@ project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 from app.utils.cache import load_alert_config
+from app.utils.env_config import get_email_config, get_webhook_url
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +31,9 @@ class NotificationService:
         """초기화"""
         self.config = load_alert_config()
         self.channels = self.config.get('channels', {})
+        # 환경 변수에서 Email 설정 로드
+        self.email_env_config = get_email_config()
+        self.webhook_url = get_webhook_url()
     
     def send_email_notification(self, message: str, severity: str = "medium",
                                details: Optional[Dict] = None,
@@ -51,13 +55,13 @@ class NotificationService:
         if not email_config.get('enabled', False):
             return False
         
-        # 필수 설정 확인
-        smtp_server = email_config.get('smtp_server', '')
-        smtp_port = email_config.get('smtp_port', 587)
-        smtp_user = email_config.get('smtp_user', '')
-        smtp_password = email_config.get('smtp_password', '')
-        from_email = email_config.get('from_email', smtp_user)
-        to_emails = email_config.get('to_emails', [])
+        # 환경 변수 우선, 없으면 설정 파일 사용
+        smtp_server = self.email_env_config.get('smtp_server') or email_config.get('smtp_server', '')
+        smtp_port = self.email_env_config.get('smtp_port') or email_config.get('smtp_port', 587)
+        smtp_user = self.email_env_config.get('smtp_user') or email_config.get('smtp_user', '')
+        smtp_password = self.email_env_config.get('smtp_password') or email_config.get('smtp_password', '')
+        from_email = self.email_env_config.get('from_email') or email_config.get('from_email', smtp_user)
+        to_emails = self.email_env_config.get('to_emails') or email_config.get('to_emails', [])
         
         if not smtp_server or not smtp_user or not smtp_password:
             logger.warning("Email 설정이 완전하지 않습니다. (smtp_server, smtp_user, smtp_password 필요)")
@@ -229,7 +233,8 @@ class NotificationService:
         if not webhook_config.get('enabled', False):
             return False
         
-        webhook_url = webhook_config.get('url', '')
+        # 환경 변수 우선, 없으면 설정 파일 사용
+        webhook_url = self.webhook_url or webhook_config.get('url', '')
         if not webhook_url:
             logger.warning("웹훅 URL이 설정되지 않았습니다.")
             return False

@@ -196,6 +196,12 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 
 # 의존성 설치
 pip install -r requirements.txt
+
+# 환경 변수 설정 (선택사항)
+# .env 파일을 생성하고 Email 알림 설정을 추가하세요
+# 자세한 내용은 docs/ENV_SETUP.md 참조
+cp .env.example .env  # .env.example이 있는 경우
+# .env 파일을 편집하여 실제 값 입력
 ```
 
 2. **설정 파일 수정**
