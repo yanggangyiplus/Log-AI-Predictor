@@ -17,6 +17,12 @@ pyyaml>=6.0
 # Web Framework (API)
 flask>=2.3.0
 
+# HTTP Requests (for notifications)
+requests>=2.31.0
+
+# Database
+# SQLite는 Python 표준 라이브러리에 포함되어 있음
+
 # Utilities
 python-dateutil>=2.8.0
 

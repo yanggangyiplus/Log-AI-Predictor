@@ -21,6 +21,7 @@ from app.utils.constants import (
     DEFAULT_RECONSTRUCTION_ERROR_THRESHOLD
 )
 from app.utils.cache import load_alert_config
+from app.services.notification_service import NotificationService
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +37,7 @@ class AlertService:
             session_state: Streamlit session_state 객체
         """
         self.session_state = session_state
+        self.notification_service = NotificationService()
         self._initialize_session_state()
     
     def _initialize_session_state(self):
@@ -105,10 +107,26 @@ class AlertService:
                     'timestamp': datetime.now()
                 })
         
-        # 알림 추가
+        # 알림 추가 및 외부 알림 전송
         if alerts:
             existing_alerts = self.session_state.get(SESSION_KEY_ALERTS, [])
-            existing_alerts.extend(alerts)
+            
+            for alert in alerts:
+                existing_alerts.append(alert)
+                
+                # 외부 알림 전송 (Slack, Webhook 등)
+                try:
+                    self.notification_service.send_notification(
+                        alert_type=alert.get('type', 'unknown'),
+                        message=alert.get('message', ''),
+                        severity=alert.get('severity', 'medium'),
+                        details={
+                            'type': alert.get('type'),
+                            'timestamp': alert.get('timestamp').isoformat() if hasattr(alert.get('timestamp'), 'isoformat') else str(alert.get('timestamp'))
+                        }
+                    )
+                except Exception as e:
+                    logger.error(f"외부 알림 전송 실패: {e}", exc_info=True)
             
             # 메모리 관리: 최근 N개만 유지
             if len(existing_alerts) > MAX_ALERTS_IN_MEMORY:

@@ -1,0 +1,67 @@
+{
+  "parsing_performance": {
+    "total_logs_processed": 125847,
+    "successfully_parsed": 124588,
+    "failed_parsing": 1259,
+    "success_rate": 99.0,
+    "improvement_timeline": [
+      {
+        "date": "2025-10-22",
+        "total_logs": 15234,
+        "parsed": 14167,
+        "failed": 1067,
+        "success_rate": 93.0,
+        "note": "초기 정규식 패턴, 예외 케이스 미처리"
+      },
+      {
+        "date": "2025-10-29",
+        "total_logs": 18456,
+        "parsed": 17678,
+        "failed": 778,
+        "success_rate": 95.8,
+        "note": "타임스탬프 파싱 개선"
+      },
+      {
+        "date": "2025-11-05",
+        "total_logs": 21345,
+        "parsed": 20918,
+        "failed": 427,
+        "success_rate": 98.0,
+        "note": "URL 경로 추출 로직 보완"
+      },
+      {
+        "date": "2025-11-12",
+        "total_logs": 24567,
+        "parsed": 24321,
+        "failed": 246,
+        "success_rate": 99.0,
+        "note": "예외 케이스 처리 추가, 정규식 최종 보완"
+      },
+      {
+        "date": "2025-11-19",
+        "total_logs": 46245,
+        "parsed": 45764,
+        "failed": 481,
+        "success_rate": 99.0,
+        "note": "현재 상태 - 안정적 파싱 성능 유지"
+      }
+    ],
+    "common_parsing_errors": {
+      "malformed_timestamp": 342,
+      "invalid_url_format": 287,
+      "missing_status_code": 198,
+      "unexpected_characters": 432
+    },
+    "log_sources": {
+      "nginx_access": 89234,
+      "nginx_error": 0,
+      "apache_access": 36613,
+      "custom_format": 0
+    }
+  },
+  "generated_at": "2025-11-19T14:30:00",
+  "analysis_period": {
+    "start": "2025-10-22",
+    "end": "2025-11-19"
+  }
+}

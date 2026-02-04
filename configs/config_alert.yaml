@@ -25,10 +25,18 @@ alert:
     # 로그 색상 하이라이트
     log_highlight: true
     
-    # Slack 웹훅 (선택사항)
-    slack:
+    # Email 알림 (선택사항)
+    email:
       enabled: false
-      webhook_url: ""
+      # SMTP 서버 설정
+      smtp_server: "smtp.gmail.com"  # Gmail: smtp.gmail.com, Outlook: smtp-mail.outlook.com
+      smtp_port: 587  # TLS: 587, SSL: 465
+      smtp_user: "your-email@gmail.com"  # SMTP 인증 이메일
+      smtp_password: "your-app-password"  # 앱 비밀번호 (Gmail의 경우)
+      from_email: "your-email@gmail.com"  # 발신자 이메일
+      to_emails:  # 수신자 이메일 리스트
+        - "admin@example.com"
+        - "team@example.com"
       
     # 일반 웹훅 (선택사항)
     webhook:

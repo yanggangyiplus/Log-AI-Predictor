@@ -1,0 +1,155 @@
+{
+  "time_savings_analysis": {
+    "manual_log_analysis": {
+      "average_time_per_day_minutes": 145,
+      "tasks": [
+        {
+          "task": "로그 파일 열기 및 검색",
+          "time_minutes": 25
+        },
+        {
+          "task": "특정 시간대 로그 확인",
+          "time_minutes": 35
+        },
+        {
+          "task": "에러 코드 수동 집계",
+          "time_minutes": 28
+        },
+        {
+          "task": "응답시간 패턴 분석",
+          "time_minutes": 32
+        },
+        {
+          "task": "이상 패턴 식별",
+          "time_minutes": 25
+        }
+      ],
+      "total_days_analyzed": 28,
+      "total_time_hours": 67.67
+    },
+    "automated_system": {
+      "average_time_per_day_minutes": 4.2,
+      "tasks": [
+        {
+          "task": "대시보드 확인",
+          "time_minutes": 2
+        },
+        {
+          "task": "알림 확인 및 대응",
+          "time_minutes": 2.2
+        }
+      ],
+      "total_days_analyzed": 28,
+      "total_time_hours": 1.96
+    },
+    "time_saved": {
+      "minutes_per_day": 140.8,
+      "hours_per_day": 2.35,
+      "total_hours_saved": 65.71,
+      "improvement_percentage": 97.1
+    }
+  },
+  "incident_response_time": {
+    "before_automation": {
+      "total_incidents": 12,
+      "average_detection_time_minutes": 32.5,
+      "average_resolution_time_minutes": 28.3,
+      "total_response_time_minutes": 60.8,
+      "incidents": [
+        {
+          "date": "2025-10-25",
+          "detection_time_minutes": 45,
+          "resolution_time_minutes": 35,
+          "type": "high_error_rate"
+        },
+        {
+          "date": "2025-11-01",
+          "detection_time_minutes": 28,
+          "resolution_time_minutes": 22,
+          "type": "response_time_degradation"
+        },
+        {
+          "date": "2025-11-10",
+          "detection_time_minutes": 25,
+          "resolution_time_minutes": 28,
+          "type": "rps_spike"
+        }
+      ]
+    },
+    "after_automation": {
+      "total_incidents": 8,
+      "average_detection_time_minutes": 3.2,
+      "average_resolution_time_minutes": 4.8,
+      "total_response_time_minutes": 8.0,
+      "incidents": [
+        {
+          "date": "2025-11-12",
+          "detection_time_minutes": 2.8,
+          "resolution_time_minutes": 5.2,
+          "type": "high_error_rate",
+          "detected_by": "isolation_forest",
+          "anomaly_score": 0.91
+        },
+        {
+          "date": "2025-11-15",
+          "detection_time_minutes": 3.5,
+          "resolution_time_minutes": 4.1,
+          "type": "response_time_degradation",
+          "detected_by": "pytorch_autoencoder",
+          "anomaly_score": 0.89
+        },
+        {
+          "date": "2025-11-18",
+          "detection_time_minutes": 2.9,
+          "resolution_time_minutes": 5.5,
+          "type": "rps_spike",
+          "detected_by": "isolation_forest",
+          "anomaly_score": 0.87
+        }
+      ]
+    },
+    "improvement": {
+      "detection_time_reduction_percent": 90.2,
+      "resolution_time_reduction_percent": 83.0,
+      "total_response_time_reduction_percent": 86.8,
+      "incidents_prevented": 4
+    }
+  },
+  "system_metrics": {
+    "log_processing": {
+      "logs_per_second": 342,
+      "average_processing_latency_ms": 2.8,
+      "peak_processing_rate": 1247,
+      "total_logs_processed": 125847
+    },
+    "feature_extraction": {
+      "windows_per_minute": 60,
+      "average_extraction_time_ms": 45.2,
+      "features_per_window": 15
+    },
+    "anomaly_detection": {
+      "predictions_per_second": 125,
+      "average_prediction_latency_ms": 2.3,
+      "model_accuracy": 87.5
+    }
+  },
+  "cost_analysis": {
+    "infrastructure": {
+      "compute_hours_per_month": 720,
+      "storage_gb": 12.5,
+      "estimated_monthly_cost_usd": 45.2
+    },
+    "labor_cost_savings": {
+      "hours_saved_per_month": 65.71,
+      "hourly_rate_usd": 50,
+      "monthly_savings_usd": 3285.5,
+      "roi_percentage": 7267
+    }
+  },
+  "generated_at": "2025-11-19T16:20:00",
+  "analysis_period": {
+    "start": "2025-10-22",
+    "end": "2025-11-19",
+    "duration_days": 28
+  }
+}

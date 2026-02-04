@@ -1,0 +1,93 @@
+{
+  "model_evaluation": {
+    "isolation_forest": {
+      "training": {
+        "dataset_size": 124588,
+        "feature_count": 15,
+        "training_time_seconds": 0.87,
+        "memory_usage_mb": 45.2,
+        "model_size_kb": 161
+      },
+      "performance": {
+        "precision": 0.89,
+        "recall": 0.85,
+        "f1_score": 0.87,
+        "false_positive_rate": 0.08,
+        "average_prediction_time_ms": 2.3
+      },
+      "anomaly_detection": {
+        "total_windows_analyzed": 12458,
+        "anomalies_detected": 342,
+        "anomaly_rate_percent": 2.75,
+        "true_positives": 291,
+        "false_positives": 51,
+        "detection_accuracy": 85.1
+      }
+    },
+    "pytorch_autoencoder": {
+      "training": {
+        "dataset_size": 124588,
+        "feature_count": 15,
+        "epochs": 20,
+        "training_time_seconds": 12.4,
+        "memory_usage_mb": 128.5,
+        "model_size_kb": 245
+      },
+      "performance": {
+        "precision": 0.92,
+        "recall": 0.88,
+        "f1_score": 0.90,
+        "false_positive_rate": 0.05,
+        "average_prediction_time_ms": 4.7,
+        "reconstruction_error_threshold": 0.75
+      },
+      "anomaly_detection": {
+        "total_windows_analyzed": 12458,
+        "anomalies_detected": 298,
+        "anomaly_rate_percent": 2.39,
+        "true_positives": 274,
+        "false_positives": 24,
+        "detection_accuracy": 91.9
+      }
+    }
+  },
+  "real_world_scenarios": {
+    "scenario_1_rps_spike": {
+      "description": "RPS 급증 패턴 감지",
+      "normal_rps": 102.3,
+      "anomaly_rps": 487.6,
+      "detection_time_seconds": 3.2,
+      "model_used": "isolation_forest",
+      "anomaly_score": 0.87,
+      "detected": true
+    },
+    "scenario_2_error_rate_increase": {
+      "description": "5xx 에러율 증가 감지",
+      "normal_error_rate": 0.05,
+      "anomaly_error_rate": 2.3,
+      "detection_time_seconds": 2.8,
+      "model_used": "isolation_forest",
+      "anomaly_score": 0.91,
+      "detected": true
+    },
+    "scenario_3_response_time_degradation": {
+      "description": "응답시간 저하 감지",
+      "normal_response_time_ms": 125.4,
+      "anomaly_response_time_ms": 1847.2,
+      "detection_time_seconds": 4.1,
+      "model_used": "pytorch_autoencoder",
+      "anomaly_score": 0.89,
+      "detected": true
+    },
+    "scenario_4_ddos_pattern": {
+      "description": "DDoS 패턴 감지",
+      "normal_unique_ips": 45,
+      "anomaly_unique_ips": 1247,
+      "detection_time_seconds": 5.3,
+      "model_used": "isolation_forest",
+      "anomaly_score": 0.94,
+      "detected": true
+    }
+  },
+  "generated_at": "2025-11-19T15:45:00"
+}
