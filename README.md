@@ -1,4 +1,5 @@
-# Log Pattern Analyzer & Anomaly Predictor
+# Log-AI-Predictor
+Log Pattern Analyzer & Anomaly Predictor
 
 서버 로그 기반 이상 패턴 분석 및 장애 예측 시스템
 
